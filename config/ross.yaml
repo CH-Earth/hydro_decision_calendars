@@ -599,3 +599,9 @@ legend_groups:
         linewidth: 5
         label: "No Upgrades Ahead of Operations"
       - type: space
+
+  Streamflow_Annual_Range:
+    description: "Streamflow Data"
+    color: "visualization.streamflow"
+    elements:
+      - type: space
