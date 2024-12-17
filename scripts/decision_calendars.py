@@ -333,7 +333,7 @@ class DecisionCalendar:
                 all_labels.append(label)
 
         # Create a single axes for the legend on the right side
-        ax_legend = fig.add_axes([0.8, 0.1, 0.15, 0.8])
+        ax_legend = fig.add_axes([0.8, 0.15, 0.15, 0.8])
         ax_legend.axis('off')
 
         legend = ax_legend.legend(
