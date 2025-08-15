@@ -36,7 +36,7 @@ This repository contains tools to generate decision calendar visualizations for 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/DaveCasson/decision_calendar.git
+   git clone https://github.com/CH-Earth/hydro_decision_calendars.git
    cd decision_calendar
    ```
 
@@ -113,4 +113,3 @@ To update plot configurations:
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-##  MIT License
