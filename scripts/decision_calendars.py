@@ -7,6 +7,17 @@ from matplotlib.patches import Patch
 from matplotlib.lines import Line2D
 import os
 import numpy as np
+from matplotlib.path import Path
+
+# Define a rectangle marker path.
+# Define a rectangle marker path centered at (0, 0)
+rectangle_marker = Path([
+    [-1, -0.5],  # 0 - 1, 0 - 0.5
+    [ 1, -0.5],  # 2 - 1, 0 - 0.5
+    [ 1,  0.5],  # 2 - 1, 1 - 0.5
+    [-1,  0.5],  # 0 - 1, 1 - 0.5
+    [-1, -0.5]
+])
 
 class DecisionCalendar:
     def __init__(self, config_path='ross.yaml', 
@@ -238,7 +249,7 @@ class DecisionCalendar:
         for sector in circos.sectors:
             # Setup sector
             sector.axis(fc="none", alpha=0.5, zorder=0)
-            sector.text(sector.name, size=15, r=20, zorder=6)  # Ensure text is on top
+            sector.text(sector.name, size=20, r=20, zorder=6)  # Ensure text is on top
 
             # Add tracks based on configurations
             for config_name, track_config in self.track_configs.items():
@@ -272,10 +283,10 @@ class DecisionCalendar:
             if 'color' in group:
                 color = self._get_color(group['color'])
                 header_handle = Line2D([], [], 
-                                    marker='s',
+                                    marker=rectangle_marker,
                                     color='none',
                                     markerfacecolor=color,
-                                    markersize=15,
+                                    markersize=30,  # Reduced size of rectangle markers
                                     label=header)
             else:
                 header_handle = Line2D([], [], label=header, color='none')
@@ -332,22 +343,88 @@ class DecisionCalendar:
                 all_handles.append(handle)
                 all_labels.append(label)
 
-        # Create a single axes for the legend on the right side
-        ax_legend = fig.add_axes([0.8, 0.15, 0.15, 0.8])
+        # Adjust the main plot to make room for bottom legend while maximizing circle size
+        fig.subplots_adjust(bottom=0.2, top=0.95, left=0.1, right=0.9)  # Optimize space usage
+
+        # Create legend axes below the main plot
+        ax_legend = fig.add_axes([0.05, 0.02, 0.9, 0.15])  # Adjusted height for legend
         ax_legend.axis('off')
 
+        # Get legend settings
+        legend_settings = self.plot_settings['legend']
+        ncol = legend_settings.get('ncol', 2)
+        base_fontsize = legend_settings.get('fontsize', 18)
+        
+        # Get column spacing from config or calculate based on font size
+        columnspacing = legend_settings.get('columnspacing', base_fontsize * 0.2)  # Use config value or calculate default
+        
+        # Count number of legend groups (excluding empty ones)
+        n_groups = sum(1 for group in legend_groups.values() if group.get('elements', []))
+        
+        # Set number of columns based on number of groups
+        ncol = min(4, n_groups)  # Use up to 4 columns, but not more than number of groups
+        
+        # Reorganize items to keep groups together
+        new_handles = []
+        new_labels = []
+        
+        # First, collect all groups with their items
+        groups_with_items = []
+        for group_name, group in legend_groups.items():
+            if not group.get('elements', []):
+                continue
+            group_items = []
+            # Add group header
+            group_items.append((all_handles[0], all_labels[0]))
+            all_handles.pop(0)
+            all_labels.pop(0)
+            # Add group elements
+            while all_handles and all_labels:
+                if all_labels[0].strip() == '':  # Space marker
+                    all_handles.pop(0)
+                    all_labels.pop(0)
+                    if not all_handles:  # End of group
+                        break
+                    if all_labels[0].replace(' ', '_') in legend_groups:  # Next group header
+                        break
+                group_items.append((all_handles.pop(0), all_labels.pop(0)))
+            groups_with_items.append(group_items)
+        
+        # Calculate items per column to distribute groups evenly
+        n_per_col = (len(groups_with_items) + ncol - 1) // ncol
+        
+        # Distribute groups across columns
+        for i, group_items in enumerate(groups_with_items):
+            for handle, label in group_items:
+                new_handles.append(handle)
+                new_labels.append(label)
+            # Add padding if needed between groups
+            if i < len(groups_with_items) - 1:
+                new_handles.append(Line2D([], [], color='none'))
+                new_labels.append('')
+        
+        # Update handles and labels
+        all_handles = new_handles
+        all_labels = new_labels
+
+        # Get legend position settings from config
+        bbox = legend_settings.get('bbox', [1.5, 0.3])  # Use config bbox or default
+        loc = legend_settings.get('loc', 'center right')  # Use config loc or default
+        
         legend = ax_legend.legend(
-            bbox_to_anchor=(0.1, 1),
-            handlelength=2,
+            bbox_to_anchor=bbox,  # Use bbox from config
+            handlelength=1.5,  # Shorter handles for better spacing
             handles=all_handles,
             labels=all_labels,
-            loc='upper left',
+            loc=loc,  # Use loc from config
             frameon=True,
-            facecolor=self.plot_settings['legend']['facecolor'],
-            edgecolor=self.plot_settings['legend']['edgecolor'],
-            fontsize=self.plot_settings['legend']['fontsize'],
-            handletextpad=0.5,
-            columnspacing=1.0,
+            facecolor=legend_settings['facecolor'],
+            edgecolor=legend_settings['edgecolor'],
+            fontsize=base_fontsize,
+            handletextpad=1.0,  # More space between handle and text
+            borderpad=1.5,  # More padding around the legend
+            columnspacing=columnspacing,
+            ncol=ncol,
             alignment='left'
         )
 
@@ -358,9 +435,7 @@ class DecisionCalendar:
                 text.set_fontsize(self.plot_settings['legend']['title_fontsize'])
                 text.set_fontweight('bold')
 
-        fig.subplots_adjust(right=0.75)  # Adjust main plot to accommodate legend on the right
-
-    def save_plot(self, fig, filename, dpi=1000, bbox_inches='tight', pad_inches=0.1):
+    def save_plot(self, fig, filename, dpi=300, bbox_inches='tight', pad_inches=0.1):
         fig.savefig(filename, dpi=dpi, bbox_inches=bbox_inches, pad_inches=pad_inches)
 
 
