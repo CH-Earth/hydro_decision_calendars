@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/904638751.svg)](https://doi.org/10.5281/zenodo.16883436)
+
 # Decision Calendar
 
 A Python-based tool for creating Decision Calendar Plots for Hydrological Forecasting.
@@ -112,4 +114,27 @@ To update plot configurations:
 
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+##  How to cite this project
+
+If you use or reference this software in your work, please cite it as follows:
+
+**APA style (for general use):**
+
+Casson, D. (2025). *CH-Earth/hydro_decision_calendars: version 1.0 release* (Version 1.0) [Computer software]. Zenodo. [https://doi.org/10.5281/zenodo.16883445](https://doi.org/10.5281/zenodo.16883445)
+
+**BibTeX (for LaTeX users):**
+
+```bibtex
+@software{casson_2025_hydro_decision_calendars,
+  title     = {CH-Earth/hydro\_decision\_calendars: version 1.0 release},
+  author    = {Casson, Dave},
+  year      = {2025},
+  month     = aug,
+  version   = {1.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.16883445},
+  url       = {https://doi.org/10.5281/zenodo.16883445}
+}
+
 
