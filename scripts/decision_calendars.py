@@ -22,7 +22,8 @@ rectangle_marker = Path([
 class DecisionCalendar:
     def __init__(self, config_path='ross.yaml', 
                  streamflow_csv=None, 
-                 swe_csv=None):
+                 swe_csv=None,
+                 pad_legend=True):
         # Load configuration
         self.config = self._load_config(config_path)
 
@@ -42,6 +43,9 @@ class DecisionCalendar:
 
         # Define plot settings
         self.plot_settings = self.config['plot_settings']
+
+        # Define padding for legend
+        self.pad_legend = pad_legend
 
         if streamflow_csv is not None:
             self.streamflow_data = self._load_and_process_data(streamflow_csv, value_col='discharge', date_col='datetime')
@@ -399,9 +403,9 @@ class DecisionCalendar:
                 new_handles.append(handle)
                 new_labels.append(label)
             # Add padding if needed between groups
-            if i < len(groups_with_items) - 1:
-                new_handles.append(Line2D([], [], color='none'))
-                new_labels.append('')
+            if self.pad_legend:
+                 new_handles.append(Line2D([], [], color='none'))
+                 new_labels.append('')
         
         # Update handles and labels
         all_handles = new_handles

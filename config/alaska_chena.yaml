@@ -3,53 +3,48 @@
 ################################################################################
 colors:
   annual_activities:
-    critical_period: "#7b3294"     # Deep purple - distinct from blues
+    critical_period: "#7b3294"     # Deep purple – stands apart, academic/annual theme
     data: "#000000"                
     forecast: "#3498DB"            
     communication: "#27AE60"        
 
   snow_forecasting:
-    critical_period: "#2166ac"  # Deeper blue for snow
+    critical_period: "#2166ac"     # Deep blue – cold/snow association
     data: "#000000"           
     forecast: "#377eb8"              
     communication: "#4daf4a" 
 
-  # Hydrological Forecasting Color Scheme
   hydrological_forecasting:
-    critical_period: "#b2182b"  # Deep red for hydro     
+    critical_period: "#b2182b"     # Deep red – strong, water/emergency association
     data: "#000000"                 
     forecast: "#377eb8"              
     communication: "#4daf4a"         
 
-  # Glacier Lake Outburst Flooding
   glacier_lake_outburst_flooding:
-    critical_period: "#fee090"  # Warm yellow
+    critical_period: "#fee090"     # Warm yellow – hazard alert but distinct
     data: "#000000"
     forecast: "#377eb8"
     communication: "#4daf4a"
 
-  # River Ice Monitoring Color Scheme
   river_ice_monitoring:
-    critical_period: "#fc8d59"  # Coral orange
+    critical_period: "#fc8d59"     # Coral orange – freeze/thaw, distinct but warm
     data: "#000000"           
     forecast: "#377eb8"              
     communication: "#4daf4a" 
 
-  # Planning and Improvement Color Scheme
   planning_and_improvement:
-    critical_period: "#d73027"  # Deep red      
+    critical_period: "#6B8E23"     # Olive green – institutional/structural, not hazard-colored
     admin: "#666666"                 
     capacity: "#666666"              
     block: "#000000"                
 
 
-  # Visualization and Other Elements
   visualization:
-    snow_survey: "#e41a1c"             # Red
-    snow_bulletin: "#4daf4a"           # Green
+    snow_survey: "#e41a1c"          # Bright red – survey highlight
+    snow_bulletin: "#4daf4a"        # Green
     spring_breakup_outlook: "#4daf4a"
-    streamflow: "#67001f"             # Very deep red for emphasis
-    swe: "#053061"                    # Very deep blue for emphasis
+    streamflow: "#67001f"           # Very deep red – serious emphasis
+    swe: "#053061"                  # Very deep blue – SWE emphasis
 
 
 styles:

@@ -3,46 +3,42 @@
 ################################################################################
 colors:
   annual_activities:
-    critical_period: "#4575b4"     # Deep blue
+    critical_period: "#7b3294"     # Deep purple – stands apart, academic/annual theme
     data: "#000000"                
     forecast: "#3498DB"            
     communication: "#27AE60"        
 
   snow_forecasting:
-    critical_period: "#2166ac"  # Deeper blue for snow
+    critical_period: "#2166ac"     # Deep blue – cold/snow association
     data: "#000000"           
     forecast: "#377eb8"              
     communication: "#4daf4a" 
 
-  # Hydrological Forecasting Color Scheme
   hydrological_forecasting:
-    critical_period: "#b2182b"  # Deep red for hydro     
+    critical_period: "#b2182b"     # Deep red – strong, water/emergency association
     data: "#000000"                 
     forecast: "#377eb8"              
     communication: "#4daf4a"         
 
-  # River Ice Monitoring Color Scheme
   river_ice_monitoring:
-    critical_period: "#fc8d59"  # Coral orange
+    critical_period: "#fc8d59"     # Coral orange – freeze/thaw, distinct but warm
     data: "#000000"           
     forecast: "#377eb8"              
     communication: "#4daf4a" 
 
-  # Planning and Improvement Color Scheme
   planning_and_improvement:
-    critical_period: "#d73027"  # Deep red      
+    critical_period: "#6B8E23"     # Olive green – institutional/structural, not hazard-colored
     admin: "#666666"                 
     capacity: "#666666"              
     block: "#000000"                
 
 
-  # Visualization and Other Elements
   visualization:
-    snow_survey: "#e41a1c"             # Red
-    snow_bulletin: "#4daf4a"           # Green
+    snow_survey: "#e41a1c"          # Bright red – survey highlight
+    snow_bulletin: "#4daf4a"        # Green
     spring_breakup_outlook: "#4daf4a"
-    streamflow: "#67001f"             # Very deep red for emphasis
-    swe: "#053061"                    # Very deep blue for emphasis
+    streamflow: "#67001f"           # Very deep red – serious emphasis
+    swe: "#053061"                  # Very deep blue – SWE emphasis
 
 
 styles:
@@ -412,16 +408,14 @@ track_configs:
     r_end: 36
     months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
-  # swe_data:
-  #   type: "data_plot"
-  #   data_type: "swe"
-  #   color_mean: "visualization.swe"
-  #   color_envelope: "visualization.swe"
-  #   date_col: "Date"
-  #   value_col: "SWE"
-  #   r_start: 36
-  #   r_end: 45
-  #   months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+  swe_data:
+    type: "data_plot"
+    data_type: "swe"
+    color_mean: "visualization.swe"
+    color_envelope: "visualization.swe"
+    r_start: 36
+    r_end: 45
+    months: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
 ################################################################################
 # Plot Settings
@@ -451,7 +445,6 @@ legend_groups:
   Snow_Seasonal_Forecasting:
     color: "snow_forecasting.critical_period"
     elements:
-      - type: space
       - type: line
         color: "snow_forecasting.data"
         linestyle: "-"
@@ -468,7 +461,6 @@ legend_groups:
         markersize: 10
         linewidth: 3
         label: "Snow Surveys"
-      - type: space
       - type: line
         color: "snow_forecasting.forecast"
         linestyle: "dashed"
@@ -479,7 +471,6 @@ legend_groups:
         linestyle: "-"
         linewidth: 3
         label: "Snow Based Forecasts"
-      - type: space
       - type: line
         color: "snow_forecasting.communication"
         linestyle: "dotted"
@@ -497,7 +488,6 @@ legend_groups:
   Hydro_Shortterm_Outlook:
     color: "hydrological_forecasting.critical_period"
     elements:
-      - type: space
       - type: line
         color: "hydrological_forecasting.data"
         linestyle: "-"
@@ -513,7 +503,6 @@ legend_groups:
         linestyle: "-"
         linewidth: 3
         label: "Model Based Forecasts (MESH, BC CLEVER, etc.)"
-      - type: space
       - type: line
         color: "hydrological_forecasting.communication"
         linestyle: "dashdot"
@@ -535,7 +524,6 @@ legend_groups:
   River_Ice_Monitoring:
     color: "river_ice_monitoring.critical_period"
     elements:
-      - type: space
       - type: line
         color: "river_ice_monitoring.data"
         linestyle: "-"
@@ -571,7 +559,6 @@ legend_groups:
   Planning_and_Improvement:
     color: "planning_and_improvement.critical_period"
     elements:
-      - type: space
       - type: line
         color: "planning_and_improvement.admin"
         linestyle: "dashed"
@@ -587,12 +574,17 @@ legend_groups:
         linestyle: "dashdot"
         linewidth: 5
         label: "Capacity for Process Improvement"
-      - type: space
       - type: line
         color: "planning_and_improvement.block"
         linestyle: "dashdot"
         linewidth: 5
         label: "No Upgrades Ahead of Operations"
+      - type: space
+
+  SWE_Annual_Range:
+    description: "Seasonal Data"
+    color: "visualization.swe"
+    elements:
       - type: space
 
   Streamflow_Annual_Range:
